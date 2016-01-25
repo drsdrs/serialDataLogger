@@ -19,7 +19,8 @@ app.listen 3000, ->
   console.log 'Example app listening on port 3000!'
   return
 
-spawn 'coffee', ['--watch', '--compile', 'public/main.coffee']
+coffeeWatch = spawn 'coffee', ['--watch', '--compile', 'public/main.coffee']
+coffeeWatch.stdout.on 'data', (data)-> console.log 'COFFEE: '+data
 
 arduinoSerial = spawn('cat', ['/dev/ttyUSB0'])
 
@@ -45,3 +46,14 @@ arduinoSerial.stdout.on 'data', (data)->
 
 arduinoSerial.on 'close', (code)->
   console.log("child process exited with code ${code}")
+
+exitHandler = (options, err)->
+  db.putLast()
+  if err then console.log err.stack
+  if options.exit
+    process.exit()
+
+process.stdin.resume()
+process.on 'exit', exitHandler.bind(null, cleanup: true)
+process.on 'SIGINT', exitHandler.bind(null, exit: true)
+process.on 'uncaughtException', exitHandler.bind(null, exit: true)

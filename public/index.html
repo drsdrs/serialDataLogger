@@ -8,13 +8,21 @@
     <script type="text/javascript" src="dc.js"></script>
     <script type="text/javascript" src="main.js"></script>
     <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+      }
       .axis { font: 10px sans-serif; }
-      path, line {
+      .line, path {
         fill: none;
         stroke: #000;
-        stroke-width: 2px;
-        shape-rendering: crispEdges;
+        stroke-width: 1px;
+        shape-rendering: geometricPrecision;
       }
+      path.domain {
+        stroke-width: 1px;
+      }
+
     </style>
   </head>
   <body></body>

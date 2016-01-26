@@ -10,7 +10,7 @@ db = require './database'
 app.use(express.static('public'))
 
 app.post '/data', (req, res) ->
-  console.log req.body
+  #console.log req.body
   db.getAll {}, (data)->
     if data==false then res.end('')
     res.end JSON.stringify data
